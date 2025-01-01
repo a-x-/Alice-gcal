@@ -7,9 +7,6 @@ alice-gcal.invntrm.ru {
 
     # Обратный прокси на Bun приложение
     reverse_proxy localhost:3001 {
-        # Таймауты
-        timeout 30s
-        
         # Заголовки для проксирования
         header_up Host {host}
         header_up X-Real-IP {remote}
