@@ -1,0 +1,16 @@
+{
+  "name": "alice-calendar",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun run index.ts",
+    "dev": "bun --watch run index.ts"
+  },
+  "dependencies": {
+    "googleapis": "^129.0.0"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "@types/node": "^20.11.0"
+  }
+}
