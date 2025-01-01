@@ -27,7 +27,7 @@ const calendar = google.calendar({ version: 'v3' });
 const userTokens = new Map<string, any>();
 
 const server = serve({
-    port: 3000,
+    port: 3001,
     async fetch(req): Promise<Response> {
         const url = new URL(req.url);
 

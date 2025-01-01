@@ -1,0 +1,36 @@
+alice-gcal.invntrm.ru {
+    # Включаем логирование
+    log {
+        output file /var/log/caddy/alice-gcal.log
+        format console
+    }
+
+    # Обратный прокси на Bun приложение
+    reverse_proxy localhost:3001 {
+        # Таймауты
+        timeout 30s
+        
+        # Заголовки для проксирования
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Forwarded-Proto {scheme}
+    }
+
+    # Автоматическое получение и обновление SSL сертификатов
+    tls {
+        protocols tls1.2 tls1.3
+    }
+
+    # Базовые заголовки безопасности
+    header {
+        # Включаем HSTS
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        # Защита от XSS
+        X-XSS-Protection "1; mode=block"
+        # Запрещаем встраивание сайта в iframe
+        X-Frame-Options "DENY"
+        # Запрещаем определение типа контента браузером
+        X-Content-Type-Options "nosniff"
+    }
+} 
