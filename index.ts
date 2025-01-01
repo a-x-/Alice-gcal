@@ -30,6 +30,11 @@ const server = serve({
     port: 3001,
     async fetch(req): Promise<Response> {
         const url = new URL(req.url);
+        console.log('Получен запрос:', {
+            method: req.method,
+            url: req.url,
+            headers: Object.fromEntries(req.headers.entries())
+        });
 
         // Обработка OAuth callback
         if (url.pathname === PATH_OAUTH_CALLBACK) {
@@ -40,6 +45,16 @@ const server = serve({
                 return new Response('Авторизация успешна! Можете вернуться к Аисе.');
             }
             return new Response('Ошибка авторизации', { status: 400 });
+        }
+
+        // Изменим обработку GET запроса на более информативную
+        if (req.method === 'GET' && url.pathname === '/') {
+            return new Response('Этот endpoint предназначен только для POST запросов от Яндекс.Диалогов', {
+                status: 200,
+                headers: {
+                    'Content-Type': 'text/plain; charset=utf-8'
+                }
+            });
         }
 
         // Обработка запросов от Алисы
@@ -140,7 +155,12 @@ const server = serve({
             }
         }
 
-        return new Response('Method not allowed', { status: 405 });
+        return new Response('Method not allowed. Only POST requests are accepted.', { 
+            status: 405,
+            headers: {
+                'Content-Type': 'text/plain; charset=utf-8'
+            }
+        });
     },
 });
 
