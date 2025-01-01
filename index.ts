@@ -33,6 +33,7 @@ const server = serve({
         console.log('Получен запрос:', {
             method: req.method,
             url: req.url,
+            pathname: url.pathname,
             headers: Object.fromEntries(req.headers.entries())
         });
 
