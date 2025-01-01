@@ -10,8 +10,6 @@ alice-gcal.invntrm.ru {
         # Заголовки для проксирования
         header_up Host {host}
         header_up X-Real-IP {remote}
-        header_up X-Forwarded-For {remote}
-        header_up X-Forwarded-Proto {scheme}
     }
 
     # Автоматическое получение и обновление SSL сертификатов

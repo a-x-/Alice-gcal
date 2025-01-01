@@ -46,6 +46,8 @@ const server = serve({
         if (req.method === 'POST') {
             try {
                 const body = await req.json() as AliceRequest;
+                console.log('Получен запрос:', JSON.stringify(body, null, 2));
+                
                 const { version, session, request } = body;
 
                 const response: AliceResponse = {
@@ -123,7 +125,10 @@ const server = serve({
                 return Response.json(response);
 
             } catch (error) {
-                console.error('Ошибка:', error);
+                console.error('Ошибка при обработке запроса:', error);
+                if (error instanceof Error) {
+                    console.error('Стек ошибки:', error.stack);
+                }
                 return Response.json({
                     version: '1.0',
                     session: {},
